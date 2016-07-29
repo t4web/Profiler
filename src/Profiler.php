@@ -23,22 +23,46 @@ class Profiler
      */
     protected $memoryMark;
 
+    /**
+     * @var array
+     */
+    protected $timers = [];
+
+    /**
+     * @var array
+     */
+    protected $timersReport = [];
+
     public function collect(MvcEvent $mvcEvent)
     {
         /** @var Request $request */
         $this->request = $mvcEvent->getRequest();
         /** @var Response $response */
         $this->response = $mvcEvent->getResponse();
+
+        $endTime = microtime(true);
+        foreach ($this->timers as $name=>$timer) {
+            if (empty($timer['end'])) {
+                $this->endTimer($name);
+            }
+        }
     }
 
     public function startTimer($name)
     {
-
+        $this->timers[$name] = [
+            'start' => microtime(true),
+            'end' => null,
+            'execution_time' => null,
+        ];
     }
 
     public function endTimer($name)
     {
-
+        $endTime = microtime(true);
+        $this->timers[$name]['end'] = $endTime;
+        $this->timers[$name]['execution_time'] = round(($endTime - $this->timers[$name]['start']) * 1000);
+        $this->timersReport[$name] = $this->timers[$name]['execution_time'] . 'ms';
     }
 
     public function markMemoryUsage($name) {
@@ -61,7 +85,7 @@ class Profiler
             'uri' => $this->request->getUriString(),
             'responseCode' => $this->response->getStatusCode(),
             'execution_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
-            'timers' => []
+            'timers' => $this->timersReport
         ];
     }
 }

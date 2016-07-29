@@ -72,3 +72,22 @@ Change default `StorageAdapter`:
 ```
 
 Or, you can implement `T4web\Profiler\StorageAdapter\StorageAdapterInterface` for create own profiler storage.
+
+By default profiler calculate basic ZF2 event execution:
+
+```json
+{
+    "route": "1ms",
+    "dispatch": "12ms",
+    "render": "0ms",
+    "finish": "0ms"
+}
+```
+
+you can disable this like this:
+
+```php
+'t4web-profiler' => [
+    'use-default-listeners' => false,
+],
+```

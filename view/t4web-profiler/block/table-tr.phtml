@@ -2,11 +2,12 @@
 /** @var \Zend\View\Model\ViewModel $viewModel */
 $viewModel = $this->viewModel()->getCurrent();
 $tdViews = $viewModel->getChildrenByCaptureTo('table-td');
+$row = $viewModel->getVariable('row');
 ?>
 <tr><?php foreach ($tdViews as $view) echo $this->render($view); ?></tr>
 <tr style="display:none;">
     <td colspan="7">
         Timers:
-        <pre>{}</pre>
+        <pre><?=json_encode(json_decode($row['timers'], true), JSON_PRETTY_PRINT)?></pre>
     </td>
 </tr>

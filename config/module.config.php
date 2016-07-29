@@ -6,6 +6,9 @@ return [
     'sebaks-view' => include 'sebaks-view.config.php',
     'entity_map' => include 'entity_map.config.php',
     't4web-crud' => include 't4web-crud.config.php',
+    't4web-profiler' => [
+        'use-default-listeners' => true,
+    ],
 
     'service_manager' => [
         'factories' => [
