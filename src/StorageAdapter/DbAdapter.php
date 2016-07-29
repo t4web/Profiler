@@ -22,13 +22,14 @@ class DbAdapter implements StorageAdapterInterface
         $profile = $profiler->toArray();
 
         $this->dbAdapter->query(
-            "INSERT INTO profiler (`method`, `uri`, `responce_code`, `execution_time`, `timers`) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO profiler (`method`, `uri`, `response_code`, `execution_time`, `timers`, `created_dt`) VALUES (?, ?, ?, ?, ?, ?)",
             [
                 $profile['method'],
                 $profile['uri'],
                 $profile['responseCode'],
                 round($profile['execution_time'] * 1000),
                 json_encode($profile['timers']),
+                date('Y-m-d H:i:s'),
             ]
         );
     }

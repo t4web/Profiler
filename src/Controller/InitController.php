@@ -31,8 +31,9 @@ class InitController extends AbstractActionController
         $table->addColumn(new Ddl\Column\Integer('id', false, null, ['autoincrement' => true]));
         $table->addColumn(new Ddl\Column\Varchar('method', 4));
         $table->addColumn(new Ddl\Column\Varchar('uri', 500));
-        $table->addColumn(new Ddl\Column\Integer('responce_code', false, null));
+        $table->addColumn(new Ddl\Column\Integer('response_code', false, null));
         $table->addColumn(new Ddl\Column\Integer('execution_time', false, null));
+        $table->addColumn(new Ddl\Column\Datetime('created_dt', false));
         $table->addColumn(new Ddl\Column\Text('timers'));
         $table->addConstraint(new Ddl\Constraint\PrimaryKey('id'));
 

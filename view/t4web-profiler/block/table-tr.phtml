@@ -1,0 +1,12 @@
+<?php
+/** @var \Zend\View\Model\ViewModel $viewModel */
+$viewModel = $this->viewModel()->getCurrent();
+$tdViews = $viewModel->getChildrenByCaptureTo('table-td');
+?>
+<tr><?php foreach ($tdViews as $view) echo $this->render($view); ?></tr>
+<tr style="display:none;">
+    <td colspan="7">
+        Timers:
+        <pre>{}</pre>
+    </td>
+</tr>
