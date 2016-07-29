@@ -5,6 +5,7 @@ ZF2 Module. Allow profiling and log slow request
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Configuring](#configuring)
+- [Timers](#timers)
 
 Introduction
 ------------
@@ -95,3 +96,13 @@ you can disable this like this:
 
 Profiler store request, which execute more than `profiling-timeout` option (500ms by default).
 
+Timers
+------------
+You can add any custom timers. Timer - it's name and execution time.
+
+```php
+$profiler = $serviceLocator->get(T4web\Profiler\Profiler::class);
+$profiler->startTimer('My slow function');
+// ...
+$profiler->endTimer('My slow function');
+```
