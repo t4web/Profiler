@@ -6,6 +6,7 @@ use Zend\ModuleManager\ModuleManager;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Exception\MissingDependencyModuleException;
+use Zend\Console\Adapter\AdapterInterface;
 
 class Module
 {
@@ -44,6 +45,14 @@ class Module
     public function getConfig()
     {
         return include dirname(__DIR__) . '/config/module.config.php';
+    }
+
+    public function getConsoleUsage(AdapterInterface $console)
+    {
+        return [
+            'Initialize prrofiler',
+            'profiler init' => 'Check config, create table `proliler`',
+        ];
     }
 }
 

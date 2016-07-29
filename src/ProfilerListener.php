@@ -5,6 +5,7 @@ namespace T4web\Profiler;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
+use Zend\Console\Request as ConsoleRequest;
 use T4web\Profiler\StorageAdapter\StorageAdapterInterface;
 
 class ProfilerListener extends AbstractListenerAggregate
@@ -32,6 +33,10 @@ class ProfilerListener extends AbstractListenerAggregate
 
     public function onFinish(MvcEvent $mvcEvent)
     {
+        if ($mvcEvent->getRequest() instanceof ConsoleRequest) {
+            return;
+        }
+
         $this->profiler->collect($mvcEvent);
         $this->storage->save($this->profiler);
     }

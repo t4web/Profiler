@@ -29,11 +29,6 @@ class Profiler
         $this->request = $mvcEvent->getRequest();
         /** @var Response $response */
         $this->response = $mvcEvent->getResponse();
-
-        die(var_dump(
-            __METHOD__,
-            $this->toArray()
-        ));
     }
 
     public function startTimer($name)
