@@ -5,9 +5,7 @@ namespace T4web\Profiler;
 use Zend\ModuleManager\ModuleManager;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventInterface;
-use Zend\Http\PhpEnvironment\Request;
 use Zend\ModuleManager\Exception\MissingDependencyModuleException;
-use Zend\Mvc\MvcEvent;
 
 class Module
 {
@@ -26,16 +24,10 @@ class Module
         /** @var EventManager $eventManager */
         $eventManager = $e->getApplication()->getEventManager();
 
-        $eventManager->attach(MvcEvent::EVENT_ROUTE, function(EventInterface $e) {
-            /** @var Request $request */
-            $request = $e->getRequest();
-
-            if (! $request instanceof Request) {
-                return;
-            }
-
-            die(var_dump(__METHOD__));
-        }, -1000);
+        $profilerListener = $e->getApplication()
+            ->getServiceManager()
+            ->get(ProfilerListener::class);
+        $eventManager->attach($profilerListener);
     }
 
     public function getAutoloaderConfig()
