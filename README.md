@@ -65,9 +65,8 @@ Change default `StorageAdapter`:
 
 ```php
 'service_manager' => [
-        'factories' => [
-            \T4web\Profiler\StorageAdapter\StorageAdapterInterface::class => \T4web\Profiler\StorageAdapter\DbAdapterFactory::class,
-        ],
+    'factories' => [
+        \T4web\Profiler\StorageAdapter\StorageAdapterInterface::class => \T4web\Profiler\StorageAdapter\DbAdapterFactory::class,
     ],
 ],
 ```
