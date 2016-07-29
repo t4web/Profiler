@@ -100,6 +100,9 @@ class ProfilerListener extends AbstractListenerAggregate
         }
 
         $this->profiler->collect($mvcEvent);
-        $this->storage->save($this->profiler);
+
+        if ($this->profiler->needStore()) {
+            $this->storage->save($this->profiler);
+        }
     }
 }

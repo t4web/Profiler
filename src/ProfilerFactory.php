@@ -9,6 +9,7 @@ class ProfilerFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceManager)
     {
-        return new Profiler();
+        $config = $serviceManager->get('Config');
+        return new Profiler($config['t4web-profiler']['profiling-timeout']);
     }
 }

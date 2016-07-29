@@ -7,6 +7,7 @@ return [
     'entity_map' => include 'entity_map.config.php',
     't4web-crud' => include 't4web-crud.config.php',
     't4web-profiler' => [
+        'profiling-timeout' => 500, // in ms
         'use-default-listeners' => true,
     ],
 

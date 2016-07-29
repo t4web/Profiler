@@ -33,14 +33,30 @@ class Profiler
      */
     protected $timersReport = [];
 
+    /**
+     * @var float
+     */
+    protected $endTime;
+
+    /**
+     * @var int
+     */
+    protected $profilingTimeout;
+
+    public function __construct($profilingTimeout)
+    {
+        $this->profilingTimeout = $profilingTimeout;
+    }
+
     public function collect(MvcEvent $mvcEvent)
     {
+        $this->endTime = microtime(true);
+
         /** @var Request $request */
         $this->request = $mvcEvent->getRequest();
         /** @var Response $response */
         $this->response = $mvcEvent->getResponse();
 
-        $endTime = microtime(true);
         foreach ($this->timers as $name=>$timer) {
             if (empty($timer['end'])) {
                 $this->endTimer($name);
@@ -84,8 +100,18 @@ class Profiler
             'method' => $this->request->getMethod(),
             'uri' => $this->request->getUriString(),
             'responseCode' => $this->response->getStatusCode(),
-            'execution_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+            'execution_time' => ($this->endTime - $_SERVER['REQUEST_TIME_FLOAT']),
             'timers' => $this->timersReport
         ];
+    }
+
+    public function getExecutionTime()
+    {
+        return ($this->endTime - $_SERVER['REQUEST_TIME_FLOAT']);
+    }
+
+    public function needStore()
+    {
+        return ($this->getExecutionTime() * 1000) > $this->profilingTimeout;
     }
 }

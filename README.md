@@ -88,6 +88,10 @@ you can disable this like this:
 
 ```php
 't4web-profiler' => [
+    'profiling-timeout' => 500, // in ms
     'use-default-listeners' => false,
 ],
 ```
+
+Profiler store request, which execute more than `profiling-timeout` option (500ms by default).
+
